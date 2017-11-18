@@ -8,31 +8,34 @@ require_once realpath(__DIR__).'/../shared/nav.php';
         <div class="row">
             <div class="col-md-12">
 
-      <!-- Jumbotron -->
-      <div class="jumbotron">
-        <h1>Home Page!</h1>
-        <h2><?=$_SERVER['REQUEST_URI']?></h2>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
-      </div>
+            <!-- Jumbotron -->
+            <div class="jumbotron">
+              <h1><?=$title?></h1>
+            </div>
 
       <!-- Example row of columns -->
       <div class="row">
-        <div class="col-lg-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-lg-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-        </div>
+        <?php
+        while($row = $posts->fetch())
+        {
+          echo "<div class='col-lg-10'>";
+          echo "<h2>".$row['title']."</h2>";
+          echo "<p><a class='btn btn-primary' "."href=/detail?id=".$row['id']." role='button'>View details &raquo;</a></p></div>";
+        }
+
+        while($row = $posts->fetch(PDO::FETCH_ASSOC))
+        {
+          echo "<div class='col-lg-10'>";
+          echo "<h2>".$row['title']."</h2>";
+          echo "<p><a class='btn btn-primary' "."href=/detail?id=".$row['id']." role='button'>View details &raquo;</a></p></div>";
+        }
+
+        // foreach($posts as $row) {
+        //     echo "<div class='col-lg-10'>";
+        //     echo "<h2>".$row['title']."</h2>";
+        //     echo "<p><a class='btn btn-primary' "."href=/detail?id=".$row['id']." role='button'>View details &raquo;</a></p></div>";
+        // }
+        ?>
       </div>
     </div>
   </div>
