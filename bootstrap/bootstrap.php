@@ -8,6 +8,9 @@ error_reporting(E_ALL);
 require realpath(__DIR__).'/../config/app.php';
 
 require_once HELPERS.'/lib.php';
+require_once realpath(__DIR__).'/../core/Connection.php';
 
 require_once realpath(__DIR__).'/../router/Router.php';
+
+
  ?>

@@ -1,51 +1,47 @@
 <?php
-require ROOT.'/bootstrap/connection.php';
 
-// $connection = new PDO('mysql:host=localhost;dbname=myshop;charset=utf8', 'dev', 'ghbdtn');
+/**
+ * Модель для работы с posts
+ */
 
-// if ($connection){
-//   $sql = 'SELECT * FROM posts';
-//   $result = $connection->query($sql);
-// }
+class Post {
 
-// try {
-//     $connection = new PDO("pgsql:host=localhost;port=5432;dbname=myshop; user=dev; password=ghbdtn");
-//
-//     $sql = 'SELECT * FROM posts';
-//     $result = $connection->query($sql);
-//
-//     $dbh = null;
-// } catch (PDOException $e) {
-//     print "Error!: " . $e->getMessage() . "<br/>";
-//     die();
-// }
+    public static function index () {
+        $db = require ROOT.'/config/db.php';
+        $con = Connection::make($db['database']);
 
+        //Подготавливаем данные
 
-// try {
-//   $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//
-//   $sql = 'SELECT * FROM posts';
-//   $result = $connection->query($sql);
-// } catch (Exception $e) {
-//   echo "Ошибка: " . $e->getMessage();
-// }
+        $sql = "SELECT id, title, content, created_at, status FROM posts ORDER BY id ASC";
 
-// try {
-//   $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//
-//   $result = $connection->query('SELECT * from posts');
-//   //Установка fetch mode
-//   $result->setFetchMode(PDO::FETCH_ASSOC);
-//
-// } catch (Exception $e) {
-//   echo "Ошибка: " . $e->getMessage();
-// }
+        // $con->exec("set names utf8");
 
-try {
-  $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //Выполняем запрос
+        $res = $con->query($sql);
 
-  $result = $connection->query('SELECT * from posts');
+        //Получаем и возвращаем результат
+        $posts = $res->fetchAll(PDO::FETCH_ASSOC);
 
-} catch (Exception $e) {
-  echo "Ошибка: " . $e->getMessage();
-}
+        return $posts;
+
+    }
+
+    public static function view($id){
+
+        $db = require ROOT.'/config/db.php';
+
+        $con = Connection::make($db['database']);
+        // $con->exec("set names utf8");
+
+        $sql = "SELECT * FROM posts WHERE id = :id";
+
+        $res = $con->prepare($sql);
+        $res->bindParam(':id', $id, PDO::PARAM_INT);
+        $res->execute();
+
+        $post = $res->fetch(PDO::FETCH_ASSOC);
+
+        return $post;
+    }
+
+ }

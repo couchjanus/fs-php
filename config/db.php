@@ -4,12 +4,24 @@
  */
 return [
     'database' => [
-        'name' => 'shopaholics',
+        'name' => 'myshop',
         'username' => 'dev',
         'password' => 'ghbdtn',
-        'connection' => 'mysql:host=localhost',
+        'connection' => 'pgsql:host=localhost',
         'options' => [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]
     ]
 ];
+
+// return [
+//     'database' => [
+//         'name' => 'myshop',
+//         'username' => 'dev',
+//         'password' => 'ghbdtn',
+//         'connection' => 'mysql:host=localhost',
+//         'options' => [
+//             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+//         ]
+//     ]
+// ];

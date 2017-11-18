@@ -2,6 +2,10 @@
 /**
  * @return string текущий адрес запроса
  */
+
+define('ROUTES',
+        include(realpath(__DIR__).'/./routes.php'));
+
 $result = null;
 
 function getURI(){
@@ -9,30 +13,42 @@ function getURI(){
         return trim($_SERVER['REQUEST_URI'], '/');
 }
 
-//получаем строку запроса
-$uri = getURI();
-
-function direct($routes, $uri)
+function direct($uri)
     {
       // Проверить наличие такого запроса в routes.php
-        if (array_key_exists($uri, $routes)) {
-            // Определить контроллер
-            return $routes[$uri];
+        if (array_key_exists($uri, ROUTES)) {
+            return ROUTES[$uri];
         }
-        echo('No route defined for this URI.');
+        Throw new Exception('No route defined for this URI.');
     }
 
-$routes = include(realpath(__DIR__).'/./routes.php');
+//получаем строку запроса
 
-$controllerName = direct($routes, $uri);
+$uri = getURI();
+$direct = direct($uri);
+
+list($controller, $action) = explode('@', $direct);
 
 //Подключаем файл контроллера
 
-$controllerFile = realpath(__DIR__).'/../controllers/' . $controllerName . "Controller.php";
+$controllerFile = realpath(__DIR__).'/../controllers/' . $controller . ".php";
+
+try{
+	 include_once($controllerFile);
+	 $controller = new $controller;
+	 if (!method_exists($controller, $action)) {
+	  		throw New Exception(
+	  			"{$controller} does not respond to the {$action} action"
+	  		);
+	 }
+	 $controller->$action();
+	 $result = true;
+} catch (Exception $e){
+	$result = false;
+	echo 'Выброшено исключение: ',  $e->getMessage(), "\n";
+
+} finally{
+	return  $result;
+}
 
 // $controllerFile = CONTROLLERS . $controllerName . "Controller.php";
-
-if(file_exists($controllerFile)){
-    include_once($controllerFile);
-    $result = true;
-}
