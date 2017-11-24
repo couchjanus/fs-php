@@ -4,7 +4,13 @@ class IndexController
 {
 	public function index()
 	{
-    view('home/index', ['title'=>'HOME PAGE']);
+        $title = 'HOME PAGE';
+        require MODELS.'Post.php';
+
+        $posts = Post::index();
+
+        view('home/index', ['title'=>$title, 'posts'=>$posts]);
+    
 	}
 
 }

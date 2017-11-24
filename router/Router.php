@@ -27,11 +27,29 @@ function direct($uri)
 $uri = getURI();
 $direct = direct($uri);
 
-list($controller, $action) = explode('@', $direct);
+// 
+
+list($segments, $action) = explode('@', $direct);
+
+$segments = explode('\\', $segments);
+// 
+$controller = array_pop($segments);
+
+$controllerFile = '/';
+
+do {
+    if(count($segments)==0){
+       $controllerFile = realpath(__DIR__).'/../controllers'.$controllerFile.$controller . ".php";
+       break;
+    }
+    else{
+        $segment = array_shift($segments);
+        $controllerFile = $controllerFile.$segment.'/';
+
+    }
+}while ( count($segments) >= 0);
 
 //Подключаем файл контроллера
-
-$controllerFile = realpath(__DIR__).'/../controllers/' . $controller . ".php";
 
 try{
 	 include_once($controllerFile);
@@ -50,5 +68,3 @@ try{
 } finally{
 	return  $result;
 }
-
-// $controllerFile = CONTROLLERS . $controllerName . "Controller.php";

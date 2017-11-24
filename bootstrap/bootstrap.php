@@ -9,8 +9,17 @@ require realpath(__DIR__).'/../config/app.php';
 
 require_once HELPERS.'/lib.php';
 require_once realpath(__DIR__).'/../core/Connection.php';
+require_once realpath(__DIR__).'/../core/View.php';
+require_once realpath(__DIR__).'/../core/Controller.php';
+require_once realpath(__DIR__).'/../models/Category.php';
+require_once realpath(__DIR__).'/../models/Product.php';
+
+// require_once realpath(__DIR__).'/./autoload.php';
+
+// // Регистрируем автозагрузчик
+
+// spl_autoload_register("autoloadsystem");
 
 require_once realpath(__DIR__).'/../router/Router.php';
 
-
- ?>
+?>
