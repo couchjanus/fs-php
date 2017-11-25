@@ -1,10 +1,11 @@
 <?php
 
-class DashboardController
+class DashboardController extends Controller       
+
 {
 	public function index()
 	{
-    view('admin/index', ['title'=>'Dashboard Controller PAGE']);
+    $this->_view->render('admin/index', ['title'=>'Dashboard Controller PAGE']);
 	}
 
 }

@@ -32,6 +32,9 @@ include_once VIEWS.'/shared/admin/header.php';
                 <p>Производитель</p>
                 <input required type="text" name="brand">
 
+                <p>Изображение товара</p>
+                <input type="file" name="image">
+
                 <p>Детальное описание</p>
                 <textarea id="add_description" name="description"></textarea>
 

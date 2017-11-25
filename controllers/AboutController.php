@@ -1,12 +1,12 @@
 <?php
 
-class AboutController
+class AboutController extends Controller
 {
     public function index()
     {
         $title = 'About PAGE';
         
-        view('home/blog', ['title'=>$title]);
+        $this->_view->render('home/blog', ['title'=>$title]);
     }
     
 }

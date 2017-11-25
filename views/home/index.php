@@ -20,7 +20,7 @@ require_once realpath(__DIR__).'/../shared/nav.php';
         foreach($posts as $row) {
             echo "<div class='col-lg-10'>";
             echo "<h2>".$row['title']."</h2>";
-            echo "<p><a class='btn btn-primary' "."href=/post?id=".$row['id']." role='button'>View details &raquo;</a></p></div>";
+            echo "<p><a class='btn btn-primary' "."href=/blog/".$row['id']." role='button'>View details &raquo;</a></p></div>";
         }
         ?>
       </div>

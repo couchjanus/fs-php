@@ -1,5 +1,5 @@
 <?php
-include_once VIEWS.'/includes/admin/header.php';
+include_once VIEWS.'/shared/admin/header.php';
 ?>
         <main>
             <h1><?= $title;?></h1>
@@ -26,4 +26,4 @@ include_once VIEWS.'/includes/admin/header.php';
 
 <?php
 
-include_once VIEWS.'/includes/admin/footer.php';
+include_once VIEWS.'/shared/admin/footer.php';

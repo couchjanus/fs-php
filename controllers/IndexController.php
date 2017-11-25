@@ -1,15 +1,12 @@
 <?php
 
-class IndexController
+class IndexController extends Controller
 {
 	public function index()
 	{
         $title = 'HOME PAGE';
-        require MODELS.'Post.php';
-
         $posts = Post::index();
-
-        view('home/index', ['title'=>$title, 'posts'=>$posts]);
+        $this->_view->render('home/index', ['title'=>$title, 'posts'=>$posts]);
     
 	}
 

@@ -20,7 +20,7 @@ class Product {
         // $con->exec("set names utf8");
 
         $sql = "
-                SELECT id, name, code, price FROM products
+                SELECT * FROM products
                 ORDER BY id ASC
                 ";
 
@@ -102,5 +102,140 @@ class Product {
 
         return $products;
     }
+
+     /**
+     * Выбираем товар по идентификатору
+     *
+     * @param $productId
+     * @return mixed
+     */
+    public static function getProductById ($productId) {
+
+        $con = Connection::make();
+
+        $sql = "
+               SELECT * FROM products
+                    WHERE id = :id
+               ";
+
+        $res = $con->prepare($sql);
+        $res->bindParam(':id', $productId, PDO::PARAM_INT);
+        $res->execute();
+
+        $product = $res->fetch(PDO::FETCH_ASSOC);
+
+        return $product;
+    }
+
+    /**
+     * Выборка товаров по массиву id
+     *
+     * @param $arrayIds
+     * @return array
+     */
+    public static function getProductsByIds ($arrayIds) {
+
+        $con = Connection::make();
+
+        //Разбиваем пришедший массив в строку
+        $stringIds = implode(',', $arrayIds);
+
+        $sql = "
+                SELECT * FROM products
+                WHERE status = 1 AND id IN ($stringIds)
+                ";
+
+        $res = $con->query($sql);
+
+        $products = $res->fetchAll(PDO::FETCH_ASSOC);
+
+        return $products;
+    }
+
     
+     /**
+     * Изменение товара
+     *
+     * @param $id
+     * @param $options
+     * @return bool
+     */
+    public static function update ($id, $options) {
+
+        $con = Connection::make();
+
+        $sql = "
+                UPDATE products
+                SET
+                    name = :name,
+                    category_id = :category,
+                    code = :code,
+                    price = :price,
+                    brand = :brand,
+                    description = :description,
+                    is_new = :is_new,
+                    status = :status
+                WHERE id = :id
+                ";
+
+        $res = $con->prepare($sql);
+
+        $res->bindParam(':name', $options['name'], PDO::PARAM_STR);
+        $res->bindParam(':category', $options['category'], PDO::PARAM_INT);
+        $res->bindParam(':code', $options['code'], PDO::PARAM_INT);
+        $res->bindParam(':price', $options['price'], PDO::PARAM_INT);
+        $res->bindParam(':brand', $options['brand'], PDO::PARAM_STR);
+        $res->bindParam(':description', $options['description'], PDO::PARAM_STR);
+        $res->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
+        $res->bindParam(':status', $options['status'], PDO::PARAM_INT);
+        $res->bindParam(':id', $id, PDO::PARAM_INT);
+
+        return $res->execute();
+    }
+
+    /**
+     * Удаление товара(админка)
+     *
+     * @param $id
+     * @return bool
+     */
+
+    public static function delete ($id) {
+        $con = Connection::make();
+
+        $sql = "
+                DELETE FROM products WHERE id = :id
+                ";
+
+        $res = $con->prepare($sql);
+        $res->bindParam(':id', $id, PDO::PARAM_INT);
+        return $res->execute();
+    }
+
+     /**
+     * Возвращает путь к изображению
+     * @param integer $id
+     * @return string <p>Путь к изображению</p>
+     */
+    public static function getImage ($id) {
+
+        // Название изображения-пустышки
+        $noImage = 'no-image.jpg';
+
+        // Путь к папке с товарами
+        $path = "/media/products/";
+
+        // Путь к изображению товара
+        $pathToProductImage = $path . $id . '/' . $id . '.jpg';
+
+        if (file_exists($_SERVER['DOCUMENT_ROOT'] . $pathToProductImage)) {
+            // Если изображение для товара существует
+            // Возвращаем путь изображения товара
+            return $pathToProductImage;
+        }
+
+        // Возвращаем путь изображения-пустышки
+        return $path . $noImage;
+    }
+
 }

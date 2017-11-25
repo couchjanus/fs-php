@@ -1,5 +1,5 @@
 <?php
-include_once VIEWS.'/includes/admin/header.php';
+include_once VIEWS.'/shared/admin/header.php';
 ?>
         <main>
             <h1><?= $title;?></h1>
@@ -40,12 +40,6 @@ include_once VIEWS.'/includes/admin/header.php';
             <p>Детальное описание</p>
             <textarea id="add_description" name="description"><?php echo $data['product']['description']?></textarea>
 
-            <p>Наличие на складе</p>
-            <select name="availability">
-                <option value="1" <?php if($data['product']['availability'] == 1) echo 'selected'?>>Да</option>
-                <option value="0" <?php if($data['product']['availability'] == 0) echo 'selected'?>>Нет</option>
-            </select>
-
             <p>Новинка</p>
             <select name="is_new">
                 <option value="1" <?php if($data['product']['is_new'] == 1) echo 'selected'?>>Да</option>
@@ -64,4 +58,4 @@ include_once VIEWS.'/includes/admin/header.php';
 
 <?php
 
-include_once VIEWS.'/includes/admin/footer.php';
+include_once VIEWS.'/shared/admin/footer.php';

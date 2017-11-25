@@ -1,23 +1,36 @@
 <?php
-include_once VIEWS.'/includes/head.php';
-include_once VIEWS.'/includes/header.php';
+require_once realpath(__DIR__).'/../shared/head.php';
+require_once realpath(__DIR__).'/../shared/nav.php';
 ?>
+  <section class="product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
         <main>
+          <!-- Jumbotron -->
+          <div class="jumbotron">
+            <h1><?=$title?></h1>
+          </div>
+            <section class="thumbnail-grid flex">
+              <div class="container">
+                <h2><?= $post['title'];?></h2>
+                <p>
+                    Create At: <?= $post['created_at'];?>
+                </p>
+                
+                <div>
+                    <?= $post['content'];?>
+                </div>
 
-            <h1><?= $title;?></h1>
-            <h2><?= $post['title'];?></h2>
-            <p>
-                Create At: <?= $post['formated_date'];?>
-            </p>
-            
-            <div>
-                <?= $post['content'];?>
             </div>
-
-            
+            </section>
         </main>
-       
 
+      </div>
+      </div>
+      </div>
+
+    </section>
 <?php
 
-include_once VIEWS.'/includes/footer.php';
+require_once realpath(__DIR__).'/../shared/footer.php';

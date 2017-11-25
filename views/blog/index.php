@@ -21,7 +21,7 @@ require_once realpath(__DIR__).'/../shared/nav.php';
                     <li>
                         <h3><?php echo $singleItem['title']?></h3>
                         <p><?php echo $singleItem['created_at'];?></p>
-                        <a href="/post/<?php echo $singleItem['id']; ?>">Read More</a>
+                        <a href="/blog/<?php echo $singleItem['id']; ?>">Read More</a>
                     </li>
 
                     <?php endforeach; ?>
