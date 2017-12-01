@@ -8,6 +8,16 @@ $router->get('api/shop', 'CatalogController@getProduct');
 $router->get('blog', 'PostsController@index');
 $router->get('blog/{id}', 'PostsController@view');
 
+$router->get('register', 'UsersController@signup');
+$router->post('register', 'UsersController@signup');
+
+$router->get('login', 'UsersController@login');
+$router->post('login', 'UsersController@login');
+
+$router->get('logout', 'UsersController@logout');
+$router->post('logout', 'UsersController@logout');
+
+
 $router->get('admin', 'Admin\DashboardController@index');
 
 $router->get('admin/categories', 'Admin\shop\CategoriesController@index');
@@ -36,3 +46,23 @@ $router->post('admin/product/delete/{id}', 'Admin\shop\ProductsController@delete
 
 
 $router->get('admin/posts', 'Admin\posts\PostsController@index');
+
+
+$router->get('admin/roles', 'Admin\acl\RolesController@index');
+$router->get('admin/roles/add', 'Admin\acl\RolesController@add');
+$router->get('admin/roles/edit/{id}', 'Admin\acl\RolesController@edit');
+$router->get('admin/roles/delete/{id}', 'Admin\acl\RolesController@delete');
+
+$router->post('admin/roles/add', 'Admin\acl\RolesController@add');
+$router->post('admin/roles/edit/{id}', 'Admin\acl\RolesController@edit');
+$router->post('admin/roles/delete/{id}', 'Admin\acl\RolesController@delete');
+
+$router->get('admin/users', 'Admin\users\UsersController@index');
+$router->get('admin/users/add', 'Admin\users\UsersController@add');
+$router->post('admin/users/add', 'Admin\users\UsersController@add');
+
+$router->get('admin/users/edit/{id}', 'Admin\users\UsersController@edit');
+$router->post('admin/users/edit/{id}', 'Admin\users\UsersController@edit');
+
+$router->get('admin/users/delete/{id}', 'Admin\users\UsersController@delete');
+$router->post('admin/users/delete/{id}', 'Admin\users\UsersController@delete');

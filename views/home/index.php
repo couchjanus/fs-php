@@ -1,6 +1,6 @@
 <?php
-require_once realpath(__DIR__).'/../shared/head.php';
-require_once realpath(__DIR__).'/../shared/nav.php';
+include_once VIEWS.'/shared/head.php';
+include_once VIEWS.'/shared/nav.php';
 ?>
 <!-- product Start -->
 <section class="product">
@@ -29,4 +29,4 @@ require_once realpath(__DIR__).'/../shared/nav.php';
 </div>
 </section>
 <?php
-require_once realpath(__DIR__).'/../shared/footer.php';
+include_once VIEWS.'/shared/footer.php';

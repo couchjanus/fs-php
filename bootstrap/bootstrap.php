@@ -12,9 +12,9 @@ require_once realpath(__DIR__).'/./autoload.php';
 // Регистрируем автозагрузчик
 spl_autoload_register("autoloadsystem");
 
+session_start();
+
 $routesFile = ROOT.'/config/routes.php';
 
 Router::load($routesFile)
     ->direct(Request::uri(), Request::method());
-
-// require_once realpath(__DIR__).'/../router/Router.php';
