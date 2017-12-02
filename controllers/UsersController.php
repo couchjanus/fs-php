@@ -13,6 +13,8 @@
          parent::__construct();
      }
 
+     protected $user;
+
     /**
      * Регистрация пользователя
      *
@@ -64,6 +66,24 @@
 
     }
 
+    public function actionCheck () {
+        if(!Session::get('logged') == true){
+
+            $response = array(
+                    'r' => 'fail',
+                    'url' => 'login'
+                );
+            } else {
+                $response = array(
+                    'r' => 'success',
+                    'msg' => 'Logged in'
+                );
+            }
+
+            echo json_encode($response);
+            exit;
+        }
+
     /**
      * Авторизация пользователя
      *
@@ -74,9 +94,9 @@
         $email = '';
         $password = '';
 
-         if(isset($_SESSION['logged']) && $_SESSION['logged'] == true){
-             header("Location: /"); //перенаправляем в личный кабинет
-         }
+       if(Session::get('logged') == true){
+         header("Location: /profile"); //перенаправляем в личный кабинет
+        }
 
         if (isset($_POST) and (!empty($_POST))) {
 
@@ -97,9 +117,11 @@
             if ($userId == false) {
                 $data['errors'][] = "Пользователя с таким email или паролем не существует";
             }else{
+                $this->user = User::get($userId);
+
                 User::auth($userId); //записываем пользователя в сессию
 
-                header("Location: /"); //перенаправляем в личный кабинет
+                header("Location: /profile"); //перенаправляем в личный кабинет
             }
         }
         $data['title'] = 'Login Page ';
@@ -114,9 +136,8 @@
      * @return bool
      */
     public function logout () {
-        if(session_destroy()){
-            header('Location: /');
-            return true;
-        }
-    }
+        Session::destroy();
+        header('Location: /');
+        return true;
+     }
 }

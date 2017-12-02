@@ -28,6 +28,15 @@
 			<a data-title='Управление категориями' href="/admin/categories">Categories</a>
 		  </li>
 		  <li>
+			<a data-title='Управление Permissions' href="/admin/permissions">Permissions</a>
+		  </li>
+		  <li>
+			<a data-title='Управление Roles' href="/admin/roles">Roles</a>
+		  </li>
+		  <li>
+			<a data-title='Управление Users' href="/admin/users">Users</a>
+		  </li>
+		  <li>
 			<a data-title='Orders' href='/admin/orders'>Orders</a>
 		  </li>
 		  <li>

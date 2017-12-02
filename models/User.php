@@ -4,6 +4,8 @@
  * Модель для работы с пользователями
  */
 class User {
+   
+   private $role;
 
    public static function index () {
         $con = Connection::make();
@@ -40,9 +42,7 @@ class User {
     public static function get($userId) {
 
         $db = Connection::make();
-
-        $sql = "
-                SELECT id, name, email, password, role_id, status
+        $sql = "SELECT *
                   FROM users
                     WHERE id = :id
                 ";
@@ -52,10 +52,21 @@ class User {
         $res->bindParam(':id', $userId);
 
         $res->execute();
-
-        return $res->fetch(PDO::FETCH_ASSOC);
+    
+        $user = $res->fetch(PDO::FETCH_ASSOC);
+        
+        //$this->role = Role::getRolePerms($user["role_id"]);
+        return $user;
     }
 
+    // check if user has a specific privilege
+    
+    public function hasPrivilege($perm) {
+        if ($this->role->hasPerm($perm)) {
+            return true;
+        }
+        return false;
+    }
   
     public static function edit ($userId, $options){
 
@@ -197,7 +208,6 @@ class User {
         if (password_verify($password, $user['password'])) {
             return $user['id'];
         }
-
         return false;
     }
 
@@ -208,8 +218,8 @@ class User {
      */
     public static function auth ($userId) {
 
-        $_SESSION['userId']=$userId; // Запись id пользователя в сессию
-        $_SESSION['logged']=true; // Запись logged пользователя в сессию
+        Session::set('userId',$userId);
+        Session::set('logged',true);
     }
 
     /**
@@ -218,12 +228,10 @@ class User {
      * @return mixed
      */
     public static function checkLog () {
-
-        //Если сессия есть, то возвращаем id пользователя
-        if ($_SESSION['userId']) {
-            return $_SESSION['userId'];
+         //Если сессия есть, то возвращаем id пользователя
+        if ((Session::get('userId'))) {
+            return Session::get('userId');
         }
-
         header('Location: user/login');
     }
 
@@ -235,7 +243,7 @@ class User {
      */
     public static function isGuest () {
 
-        if (isset($_SESSION['logged'])) {
+        if (Session::get('logged') == true) {
             return false;
         }
         return true;
