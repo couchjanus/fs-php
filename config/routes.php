@@ -14,6 +14,12 @@ $router->get('profile/edit', 'ProfileController@edit');
 
 $router->post('profile/edit', 'ProfileController@edit');
 
+$router->post('check', 'UsersController@actionCheck');
+$router->post('cart', 'CartController@index');
+
+$router->get('catalog/page-{page}', 'CatalogController@index');
+$router->get('catalog', 'CatalogController@index');
+
 $router->get('register', 'UsersController@signup');
 $router->post('register', 'UsersController@signup');
 
@@ -83,3 +89,11 @@ $router->post('admin/users/edit/{id}', 'Admin\users\UsersController@edit');
 
 $router->get('admin/users/delete/{id}', 'Admin\users\UsersController@delete');
 $router->post('admin/users/delete/{id}', 'Admin\users\UsersController@delete');
+
+
+$router->get('admin/orders', 'Admin\shop\OrdersController@index');
+$router->get('admin/orders/view/{id}', 'Admin\shop\OrdersController@view');
+$router->get('admin/orders/edit/{id}', 'Admin\shop\OrdersController@edit');
+$router->get('admin/orders/delete/{id}', 'Admin\shop\OrdersController@delete');
+$router->post('admin/orders/edit/{id}', 'Admin\shop\OrdersController@edit');
+$router->post('admin/orders/delete/{id}', 'Admin\shop\OrdersController@delete');

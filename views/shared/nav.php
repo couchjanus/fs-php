@@ -22,7 +22,7 @@
                            <li><a href="/contact" >Contact Us</a> </li>
               <li class="nav-icons" id="navicons">
               <a href="#"><label for="search-toggle"><i class="fa fa-search button-search" aria-hidden="true"></i></label></a>
-              <a href="#"><label for="modal-basket-toggle" id="cart_trigger"><i class="fa fa-shopping-cart" aria-hidden="true"></i></label></a>
+              <a href="#"><label for="modal-basket-toggle" id="cart-trigger"><i class="fa fa-shopping-cart shopping-cart" aria-hidden="true"></i></label></a>
               <a href="#"><label for="modal-login-toggle" class="animate"><i class="fa fa-user" aria-hidden="true"></i></label></a>
               <dropdown>
                 <input id="modal-login-toggle" type="checkbox">
@@ -37,8 +37,8 @@
               </dropdown>
           </li>
 
-                       </ul>
+        </ul>
 
-                    </nav>
+      </nav>
    </div><!-- /.container-fluid -->
  </header>

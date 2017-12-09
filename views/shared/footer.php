@@ -91,6 +91,23 @@
 
 <!-- Footer Area End -->
 
+    <div id="cart">
+        <h2>Cart</h2>
+        
+        <ul class="cart-items" id="cartBody">
+
+        </ul> <!-- cd-cart-items -->
+
+        <div class="cart-total" id="cart_total">
+            <p>Total <span id="allTotal">$00.00</span></p>
+        </div> <!-- cd-cart-total -->
+
+        <a href="#" class="checkout-btn dialog__trigger">Checkout</a>
+
+        <p class="clear-cart">Clear your shopping cart</p>
+    </div> <!-- cd-cart -->
+
+
 <script src="/js/jquery.min.js"></script>
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

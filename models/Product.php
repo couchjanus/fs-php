@@ -41,13 +41,23 @@ class Product {
 
         $con = Connection::make();
 
+        // "SELECT fields FROM products ORDER BY id DESC LIMIT 1";
+        
+        // $res = $con->query("SELECT id FROM products ORDER BY id DESC LIMIT 1");
+        
+        $res = $con->prepare("SELECT id FROM products ORDER BY id DESC LIMIT 1");
+        $res->execute();
+        $pic = $res->fetch(PDO::FETCH_ASSOC)['id']+1;
+        // $pic = $con->query("SELECT id FROM products ORDER BY id DESC LIMIT 1")->fetch(PDO::FETCH_ASSOC)+1;
+        
         $sql = "
-                INSERT INTO products(name, category_id, code, price, brand, description, is_new, status)
-                VALUES (:name, :category_id, :code, :price, :brand, :description, :is_new, :status)
+                INSERT INTO products(name, category_id, code, price, brand, description, is_new, status, picture)
+                VALUES (:name, :category_id, :code, :price, :brand, :description, :is_new, :status, :picture)
                 ";
 
-        $res = $con->prepare($sql);
 
+        $res = $con->prepare($sql);
+        $pic = $pic.'.jpg';
         $res->bindParam(':name', $options['name'], PDO::PARAM_STR);
         $res->bindParam(':category_id', $options['category'], PDO::PARAM_INT);
         $res->bindParam(':code', $options['code'], PDO::PARAM_INT);
@@ -56,7 +66,7 @@ class Product {
         $res->bindParam(':description', $options['description'], PDO::PARAM_STR);
         $res->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
         $res->bindParam(':status', $options['status'], PDO::PARAM_INT);
-
+        $res->bindParam(':picture', $pic, PDO::PARAM_STR);
         //Если запрос выполнен успешно
         if ($res->execute()) {
             //Возвращаем id последней записи, позже, в контроллере переходим на страницу этого товара, если все успешно
@@ -174,7 +184,8 @@ class Product {
                     brand = :brand,
                     description = :description,
                     is_new = :is_new,
-                    status = :status
+                    status = :status,
+                    picture = :picture
                 WHERE id = :id
                 ";
 
@@ -189,6 +200,7 @@ class Product {
         $res->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
         $res->bindParam(':status', $options['status'], PDO::PARAM_INT);
         $res->bindParam(':id', $id, PDO::PARAM_INT);
+        $res->bindParam(':picture', $id.'.jpg', PDO::PARAM_STR);
 
         return $res->execute();
     }
