@@ -6,7 +6,17 @@ class IndexController extends Controller
 	{
         $title = 'HOME PAGE';
         $posts = Post::index();
-        $this->_view->render('home/index', ['title'=>$title, 'posts'=>$posts]);
+        
+        $data['posts'] = $posts;
+        $data['title'] = $title;
+        
+        $breadcrumb = new Breadcrumb();
+
+        $data['breadcrumb'] = $breadcrumb->build(array(
+            
+        ));
+
+        $this->_view->render('home/index', $data);
     
 	}
 

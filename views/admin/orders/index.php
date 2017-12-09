@@ -1,7 +1,7 @@
 <?php
 include_once VIEWS.'/shared/admin/header.php';
 ?>
-         <main>
+       <main>
             <h1><?= $title;?></h1>
         </main>
        

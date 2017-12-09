@@ -1,18 +1,13 @@
 <?php
 include_once VIEWS.'/shared/admin/header.php';
 ?>
-        <main>
-            <h1><?= $title;?></h1>
-        </main>
-       
 
+    <h1><?= $title;?></h1>
     <article class='large'>
-
-        <h2>Просмотр заказа #<?php echo $data['order']['id'];?></h2>
+        <h3>Просмотр заказа #<?php echo $data['order']['id'];?></h3>
         <h4>Информация о заказе</h4>
 
         <table>
-
             <tr>
                 <td>Номер заказа :</td>
                 <td><?php echo $data['order']['id'];?></td>
@@ -29,25 +24,19 @@ include_once VIEWS.'/shared/admin/header.php';
             </tr>
 
             <tr>
-                <td>Комментарий клиента :</td>
-                <td><?php echo $data['order']['user_comment'];?></td>
-            </tr>
-
-            <tr>
                 <td>ID клиента :</td>
                 <td><?php echo $data['order']['user_id'];?></td>
             </tr>
 
             <tr>
-                <th>Дата заказа :</th>
-                <td><?php echo $data['order']['formated_date'];?></td>
+                <td>Дата заказа :</td>
+                <td><?php echo $data['order']['date'];?></td>
             </tr>
 
             <tr>
-                <th>Статус заказа :</th>
+                <td>Статус заказа :</td>
                 <td><?php echo Order::getStatusText($data['order']['status']);?></td>
             </tr>
-
         </table>
 
         <h3>Товары в заказе</h3>
@@ -73,7 +62,8 @@ include_once VIEWS.'/shared/admin/header.php';
                 </tr>
             <?php endforeach;?>
         </table>
-</main>
+</article>
+
 <?php
 
 include_once VIEWS.'/shared/admin/footer.php';

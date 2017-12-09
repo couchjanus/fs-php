@@ -6,7 +6,7 @@
 class Product {
 
     //Количество отображаемых товаров по умолчанию
-    const SHOW_BY_DEFAULT = 6;
+    const SHOW_BY_DEFAULT = 2;
 
     /**
      * Выводит списко всех товраов
@@ -92,7 +92,7 @@ class Product {
         $con = Connection::make();
 
         $sql = "
-                SELECT id, name, price, is_new, description
+                SELECT *
                   FROM products
                     WHERE status = 1
                       ORDER BY id DESC
@@ -148,16 +148,14 @@ class Product {
         $con = Connection::make();
 
         //Разбиваем пришедший массив в строку
+
         $stringIds = implode(',', $arrayIds);
 
-        $sql = "
-                SELECT * FROM products
-                WHERE status = 1 AND id IN ($stringIds)
-                ";
+        $sth = $con->prepare("SELECT * FROM products WHERE status = 1 AND id IN ($stringIds)");
+        
+        $sth->execute();
 
-        $res = $con->query($sql);
-
-        $products = $res->fetchAll(PDO::FETCH_ASSOC);
+        $products = $sth->fetchAll(PDO::FETCH_ASSOC);
 
         return $products;
     }
@@ -248,6 +246,27 @@ class Product {
 
         // Возвращаем путь изображения-пустышки
         return $path . $noImage;
+    }
+
+    /**
+     * Общее кол-во товаров в магазине
+     *
+     * @return mixed
+     */
+    public static function getTotalProducts () {
+
+        // Соединение с БД
+        $db = Connection::make();
+
+        // Текст запроса к БД
+        $sql = "SELECT count(id) AS count FROM products WHERE status=1 ";
+
+        // Выполнение коменды
+        $res = $db->query($sql);
+
+        // Возвращаем значение count - количество
+        $row = $res->fetch();
+        return $row['count'];
     }
 
 }

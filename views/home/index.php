@@ -7,7 +7,7 @@ include_once VIEWS.'/shared/nav.php';
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-
+              <div class="breadcrumb"><?= $breadcrumb;?></div>
             <!-- Jumbotron -->
             <div class="jumbotron">
               <h1><?=$title?></h1>

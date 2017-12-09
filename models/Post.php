@@ -6,14 +6,16 @@
 
 class Post {
 
+    //Количество отображаемых по умолчанию
+    const SHOW_BY_DEFAULT = 2;
+
+
     public static function index () {
         
         $con = Connection::make();
         //Подготавливаем данные
 
-        $sql = "SELECT id, title, content, created_at, status FROM posts ORDER BY id ASC";
-
-        // $con->exec("set names utf8");
+        $sql = "SELECT * FROM posts ORDER BY id ASC";
 
         //Выполняем запрос
         $res = $con->query($sql);
@@ -24,6 +26,7 @@ class Post {
         return $posts;
 
     }
+
 
     public static function view($id){
 
@@ -119,5 +122,59 @@ class Post {
 
         return $post;
     }
+
+     /**
+     * Общее кол-во 
+     *
+     * @return mixed
+     */
+    public static function getTotalPosts () {
+
+        // Соединение с БД
+        $db = Connection::make();
+
+        // Текст запроса к БД
+        $sql = "SELECT count(id) AS count FROM posts";
+
+        // Выполнение коменды
+        $res = $db->query($sql);
+
+        // Возвращаем значение count - количество
+        $row = $res->fetch();
+        return $row['count'];
+    }
+
+
+    public static function getLatestPosts ($page = 1) {
+
+        $limit = self::SHOW_BY_DEFAULT;
+
+        //Задаем смещение
+        $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
+
+        $con = Connection::make();
+
+        $sql = "
+                SELECT *
+                  FROM posts
+                    WHERE status = 1
+                      ORDER BY id DESC
+                        LIMIT :limit OFFSET :offset
+                ";
+
+        //Подготавливаем данные
+        $res = $con->prepare($sql);
+        $res->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $res->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+        //Выполняем запрос
+        $res->execute();
+
+        //Получаем и возвращаем результат
+        $posts = $res->fetchAll(PDO::FETCH_ASSOC);
+
+        return $posts;
+    }
+
 
  }

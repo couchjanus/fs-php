@@ -8,6 +8,7 @@ require_once realpath(__DIR__).'/../shared/nav.php';
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+            <div class="breadcrumb"><?= $breadcrumb;?></div>
                 <div class="feature_header text-center">
                     <h3 class="feature_title">Our <b>product Members</b></h3>
                     <h4 class="feature_sub">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </h4>
@@ -18,6 +19,7 @@ require_once realpath(__DIR__).'/../shared/nav.php';
             <div class="product-items">
 
             </div>
+            
         </div>
     </div> <!-- Conatiner product end -->
 </section>  <!-- Section product End -->

@@ -8,6 +8,7 @@ require_once realpath(__DIR__).'/../shared/nav.php';
         <div class="row">
             <div class="col-md-12">
         <main>
+        <div class="breadcrumb"><?= $breadcrumb;?></div>
           <!-- Jumbotron -->
           <div class="jumbotron">
             <h1><?=$title?></h1>
@@ -25,7 +26,10 @@ require_once realpath(__DIR__).'/../shared/nav.php';
                     </li>
 
                     <?php endforeach; ?>
-                </ul> <!-- gallery-items -->
+                </ul>
+                <div class="middle">
+                  <?php echo $data['pagination']->get();?>
+               </div>
             </div>
             </section>
         </main>

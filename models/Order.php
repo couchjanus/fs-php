@@ -108,13 +108,11 @@ class Order {
         // Соединение с БД
         $db =  Connection::make();
 
-        $sql = "SELECT id, user_id,
-                DATE_FORMAT(`date`, '%d.%m.%Y %H:%i:%s') AS formated_date,
-                products, status
-                  FROM orders WHERE id = :id
-               ";
+        $sql = "SELECT * FROM orders INNER JOIN users
+               ON orders.user_id = users.id WHERE orders.id = :id";
 
         $res = $db->prepare($sql);
+        
         $res->bindParam(':id', $id, PDO::PARAM_INT);
 
         // Выполняем запрос

@@ -30,6 +30,7 @@ class OrdersController extends Controller {
      * @return bool
      */
     public function view ($vars){
+        
         extract($vars);
 
         //проверка доступа
@@ -38,29 +39,38 @@ class OrdersController extends Controller {
         //Получаем заказ по id
         $order = Order::getOrderById($id);
 
+        // print_r($order);
+
         //Преобразуем JSON  строку продуктов и их кол-ва в массив
 
-        $productQuantity = json_decode(json_decode($orders['products'], true));
+        $productsInOrder = json_decode(json_decode($order['products'], true));
+
+        // print_r($productsInOrder);
 
         //Выбираем ключи заказанных товаров
         $productIds = array();
 
-        $pQuantity =  array();
+        $productQuantity =  array();
 
-        for ($i=0; $i<count($productQuantity); $i++)
+        for ($i=0; $i<count($productsInOrder); $i++)
         {
-                array_push($productIds, $productQuantity[$i] ->{'id'});
+          
+          array_push($productIds, $productsInOrder[$i]->{'Id'});
 
-                array_push($pQuantity, array($productQuantity[$i] ->{'id'} => $productQuantity[$i] ->{'quantity'}));
+          array_push($productQuantity, array($productsInOrder[$i]->{'Id'} => $productsInOrder[$i] ->{'Quantity'}));
         }
 
+        // print_r($productIds);
+        // print_r($productQuantity);
 
-        //Получаем список товаров по выбранным id
+        // Получаем список товаров по выбранным id
 
         $products = Product::getProductsByIds($productIds);
 
+        // print_r($products);
+
         $data['order'] = $order;
-        $data['pQuantity'] = $pQuantity;
+        $data['pQuantity'] = $productQuantity;
         $data['products'] = $products;
         $data['title'] = 'Admin Order View Page ';
         
